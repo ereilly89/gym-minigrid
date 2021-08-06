@@ -31,7 +31,7 @@ class DoorKeyEnv(MiniGridEnv):
         self.place_agent(size=(splitIdx, height))
 
         # Place a door in the wall
-        doorIdx = self._rand_int(1, width-2)
+        doorIdx = 2#self._rand_int(1, width-2)
         self.put_obj(Door('yellow', is_locked=True), splitIdx, doorIdx)
 
         # Place a yellow key on the left side
