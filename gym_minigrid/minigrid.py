@@ -110,7 +110,7 @@ class WorldObj:
 
     def encode(self):
         """Encode the a description of this object as a 3-tuple of integers"""
-        return (OBJECT_TO_IDX[self.type], COLOR_TO_IDX[self.color], 0, self.agent_pos[0], self.agent_pos[1])
+        return (OBJECT_TO_IDX[self.type], COLOR_TO_IDX[self.color], 0)
 
     @staticmethod
     def decode(type_idx, color_idx, state):
@@ -245,7 +245,6 @@ class Door(WorldObj):
             state = 2
         elif not self.is_open:
             state = 1
-        print("self:"+str(self))
         return (OBJECT_TO_IDX[self.type], COLOR_TO_IDX[self.color], state)
 
     def render(self, img):
@@ -1213,6 +1212,8 @@ class MiniGridEnv(gym.Env):
         obs = {
             'image': image,
             'direction': self.agent_dir,
+            'agent_x': self.agent_pos[0],
+            'agent_y': self.agent_pos[1],
             'mission': self.mission
         }
 
