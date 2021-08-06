@@ -4,7 +4,7 @@ from gym_minigrid.register import register
 class DoorKeyEnv(MiniGridEnv):
     """
     Environment with a door and key, sparse reward
-    """
+    """ 
 
     def __init__(self, size=8):
         super().__init__(
@@ -23,7 +23,7 @@ class DoorKeyEnv(MiniGridEnv):
         self.put_obj(Goal(), width - 2, height - 2)
 
         # Create a vertical splitting wall
-        splitIdx = 3#self._rand_int(2, width-2)
+        splitIdx = self._rand_int(2, width-2) # Ex) 2
         self.grid.vert_wall(splitIdx, 0)
 
         # Place the agent at a random position and orientation
@@ -31,17 +31,24 @@ class DoorKeyEnv(MiniGridEnv):
         self.place_agent(size=(splitIdx, height))
 
         # Place a door in the wall
-        doorIdx = 2#self._rand_int(1, width-2)
+        doorIdx = self._rand_int(1, width-2) # Ex) 2
+        self.door_loc = (splitIdx, doorIdx)
         self.put_obj(Door('yellow', is_locked=True), splitIdx, doorIdx)
 
         # Place a yellow key on the left side
-        self.place_obj(
+        self.key_pos = self.place_obj(
             obj=Key('yellow'),
             top=(0, 0),
             size=(splitIdx, height)
         )
 
         self.mission = "use the key to open the door and then get to the goal"
+
+    def getDoorLoc(self):
+        return self.door_loc
+    
+    def getKeyLoc(self):
+        return self.key_loc
 
 class DoorKeyEnv5x5(DoorKeyEnv):
     def __init__(self):
