@@ -1214,6 +1214,10 @@ class MiniGridEnv(gym.Env):
             'direction': self.agent_dir,
             'agent_x': self.agent_pos[0],
             'agent_y': self.agent_pos[1],
+            'key_x': self.key_pos[0],
+            'key_y': self.key_pos[1],
+            'door_x': self.door_pos[0],
+            'door_y': self.door_pos[1],
             'mission': self.mission
         }
 
