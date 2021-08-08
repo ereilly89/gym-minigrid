@@ -24,6 +24,7 @@ class DoorKeyEnv(MiniGridEnv):
 
         # Create a vertical splitting wall
         splitIdx = self._rand_int(2, width-2) # Ex) 2
+        self.splitIdx = splitIdx
         self.grid.vert_wall(splitIdx, 0)
 
         # Place the agent at a random position and orientation
@@ -32,6 +33,7 @@ class DoorKeyEnv(MiniGridEnv):
 
         # Place a door in the wall
         doorIdx = self._rand_int(1, width-2) # Ex) 2
+        self.doorIdx = doorIdx
         self.door_pos = (splitIdx, doorIdx)
         self.put_obj(Door('yellow', is_locked=True), splitIdx, doorIdx)
 
@@ -44,11 +46,32 @@ class DoorKeyEnv(MiniGridEnv):
 
         self.mission = "use the key to open the door and then get to the goal"
 
-    def getDoorLoc(self):
-        return self.door_loc
-    
-    def getKeyLoc(self):
-        return self.key_loc
+
+    def _gen_state(self, width, height, stateInfo):
+         # Create an empty grid
+        self.grid = stateInfo.grid
+
+        # Generate the surrounding walls
+        self.grid.wall_rect(0, 0, width, height)
+
+        # Place a goal in the bottom-right corner
+        self.put_obj(Goal(), width - 2, height - 2)
+
+        # Create a vertical splitting wall
+        self.grid.vert_wall(stateInfo.splitIdx, 0)
+
+        # Place the agent at a random position and orientation
+        # on the left side of the splitting wall
+        self.place_agent(size=(stateInfo.splitIdx, height))
+
+        # Place a door in the wall
+        self.door_pos = (stateInfo.splitIdx, stateInfo.doorIdx)
+        self.put_obj(Door('yellow', is_locked=True), stateInfo.splitIdx, stateInfo.doorIdx)
+
+        # Place a yellow key on the left side
+        self.key_pos = stateInfo.key_pos
+
+        self.mission = "use the key to open the door and then get to the goal"
 
 class DoorKeyEnv5x5(DoorKeyEnv):
     def __init__(self):
