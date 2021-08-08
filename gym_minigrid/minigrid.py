@@ -702,6 +702,37 @@ class MiniGridEnv(gym.Env):
         # Initialize the state
         self.reset(None)
 
+
+    def set_state(self, stateInfo):
+        # Current position and direction of the agent
+        self.agent_pos = None
+        self.agent_dir = None
+
+        # Generate a new random grid at the start of each episode
+        # To keep the same grid for each episode, call env.seed() with
+        # the same seed before calling env.reset()
+        self._gen_state(self.width, self.height, stateInfo)
+        
+
+        # These fields should be defined by _gen_grid
+        assert self.agent_pos is not None
+        assert self.agent_dir is not None
+
+        # Check that the agent doesn't overlap with an object
+        start_cell = self.grid.get(*self.agent_pos)
+        assert start_cell is None or start_cell.can_overlap()
+
+        # Item picked up, being carried, initially nothing
+        self.carrying = stateInfo["carrying"]
+
+        # Step count since episode start
+        self.step_count = stateInfo["step_count"]
+
+        # Return first observation
+        obs = self.gen_obs()
+        return obs
+
+
     def reset(self, stateInfo=None):
         # Current position and direction of the agent
         self.agent_pos = None
