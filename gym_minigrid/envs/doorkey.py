@@ -29,7 +29,7 @@ class DoorKeyEnv(MiniGridEnv):
 
         # Place the agent at a random position and orientation
         # on the left side of the splitting wall
-        self.place_agent(size=(splitIdx, height))
+        self.agent_pos = self.place_agent(size=(splitIdx, height))
 
         # Place a door in the wall
         doorIdx = self._rand_int(1, width-2) # Ex) 2
@@ -62,7 +62,13 @@ class DoorKeyEnv(MiniGridEnv):
 
         # Place the agent at a random position and orientation
         # on the left side of the splitting wall
-        self.place_agent(size=(stateInfo["splitIdx"], height))
+        # self.place_agent(size=(stateInfo["splitIdx"], height))
+        
+        # Place agent as pre-determined position
+        self.agent_pos = stateInfo["agent_pos"]
+        self.put_obj(None, self.agent_pos[0], self.agent_pos[1])
+        self.agent_dir = stateInfo["agent_dir"]
+
 
         # Place a door in the wall
         self.door_pos = (stateInfo["splitIdx"], stateInfo["doorIdx"])
@@ -70,6 +76,10 @@ class DoorKeyEnv(MiniGridEnv):
 
         # Place a yellow key on the left side
         self.key_pos = stateInfo["key_pos"]
+
+        # Place key at pre-determined position
+        self.put_obj(Key('yellow'), self.key_pos[0], self.key_pos[1])
+
 
         self.mission = "use the key to open the door and then get to the goal"
 
