@@ -702,7 +702,17 @@ class MiniGridEnv(gym.Env):
         # Initialize the state
         self.reset()
 
-    def reset(self):
+
+    def set_state(self, stateInfo):
+        self.agent_pos = stateInfo.agent_pos
+        self.agent_dir = stateInfo.agent_dir
+        self.grid = stateInfo.grid
+        
+        return self
+
+
+
+    def reset(self, stateInfo):
         # Current position and direction of the agent
         self.agent_pos = None
         self.agent_dir = None
@@ -710,7 +720,10 @@ class MiniGridEnv(gym.Env):
         # Generate a new random grid at the start of each episode
         # To keep the same grid for each episode, call env.seed() with
         # the same seed before calling env.reset()
-        self._gen_grid(self.width, self.height)
+        if stateInfo is not None:
+            self._gen_state(self.width, self.height, stateInfo)
+        else:
+            self._gen_grid(self.width, self.height)
 
         # These fields should be defined by _gen_grid
         assert self.agent_pos is not None
