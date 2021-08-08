@@ -79,12 +79,14 @@ class DoorKeyEnv(MiniGridEnv):
 
         # Place key at pre-determined position
         self.put_obj(Key('yellow'), self.key_pos[0], self.key_pos[1])
-
+        self.carrying = stateInfo["carrying"]
+        self.step_count = stateInfo["step_count"]
 
         self.mission = "use the key to open the door and then get to the goal"
 
 
-    def set_state(self, stateInfo):
+    """
+    def _set_state(self, stateInfo):
         # Current position and direction of the agent
         self.agent_pos = None
         self.agent_dir = None
@@ -112,7 +114,7 @@ class DoorKeyEnv(MiniGridEnv):
         # Return first observation
         obs = self.gen_obs()
         return obs
-
+    """
 class DoorKeyEnv5x5(DoorKeyEnv):
     def __init__(self):
         super().__init__(size=5)
