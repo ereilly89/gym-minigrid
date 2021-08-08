@@ -702,17 +702,7 @@ class MiniGridEnv(gym.Env):
         # Initialize the state
         self.reset(None)
 
-
-    def set_state(self, stateInfo):
-        self.agent_pos = stateInfo.agent_pos
-        self.agent_dir = stateInfo.agent_dir
-        self.grid = stateInfo.grid
-        
-        return self
-
-
-
-    def reset(self, stateInfo):
+    def reset(self, stateInfo=None):
         # Current position and direction of the agent
         self.agent_pos = None
         self.agent_dir = None
