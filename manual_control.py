@@ -19,7 +19,7 @@ def reset():
         env.seed(args.seed)
 
     obs = env.reset()
-
+    #print("hash:"+str(env.hash()))
     if hasattr(env, 'mission'):
         print('Mission: %s' % env.mission)
         window.set_caption(env.mission)

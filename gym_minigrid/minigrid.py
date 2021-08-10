@@ -676,6 +676,7 @@ class MiniGridEnv(gym.Env):
             shape=(self.agent_view_size, self.agent_view_size, 3),
             dtype='uint8'
         )
+        self.image = self.observation_space
         self.observation_space = spaces.Dict({
             'image': self.observation_space
         })
@@ -752,7 +753,7 @@ class MiniGridEnv(gym.Env):
         """
         sample_hash = hashlib.sha256()
 
-        to_encode = [self.grid.encode.tolist(), self.agent_pos, self.agent_dir, self.key_pos, self.door_pos] # [self.grid.encode().tolist(), self.agent_pos, self.agent_dir]
+        to_encode = [self.grid.encode.tolist(), self.agent_pos, self.agent_dir, self.key_pos, self.door_pos, self.carrying] # [self.grid.encode().tolist(), self.agent_pos, self.agent_dir]
         for item in to_encode:
             sample_hash.update(str(item).encode('utf8'))
 
