@@ -747,7 +747,7 @@ class MiniGridEnv(gym.Env):
         self.np_random, _ = seeding.np_random(seed)
         return [seed]
 
-    def hash(self, 5): #size=16):
+    def hash(self, size=5): #size=16):
         """Compute a hash that uniquely identifies the current state of the environment.
         :param size: Size of the hashing
         """
