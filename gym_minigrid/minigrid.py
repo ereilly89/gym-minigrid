@@ -747,11 +747,11 @@ class MiniGridEnv(gym.Env):
         self.np_random, _ = seeding.np_random(seed)
         return [seed]
 
-    def hash(self, size=16):
+    def hash(self, 5): #size=16):
         """Compute a hash that uniquely identifies the current state of the environment.
         :param size: Size of the hashing
         """
-        sample_hash = hashlib.sha256(seed = 0)
+        sample_hash = hashlib.sha256()
 
         """self.grid.encode().tolist()"""
         to_encode = [self.grid.encode().tolist(), self.agent_pos, self.agent_dir, self.key_pos, self.door_pos, self.carrying] #  self.splitIdx, self.doorIdx # [self.grid.encode().tolist(), self.agent_pos, self.agent_dir]
