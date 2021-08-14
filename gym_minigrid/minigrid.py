@@ -747,14 +747,17 @@ class MiniGridEnv(gym.Env):
         self.np_random, _ = seeding.np_random(seed)
         return [seed]
 
-    def hash(self, size=5): #size=16):
+    def hash(self, size=16):
         """Compute a hash that uniquely identifies the current state of the environment.
         :param size: Size of the hashing
         """
         sample_hash = hashlib.sha256()
 
         """self.grid.encode().tolist()"""
-        to_encode = [self.grid.encode().tolist(), self.agent_pos, self.agent_dir, self.key_pos, self.door_pos, self.carrying] #  self.splitIdx, self.doorIdx # [self.grid.encode().tolist(), self.agent_pos, self.agent_dir]
+        carryingKey = False
+        if self.carrying is not None:
+            carryingKey = True
+        to_encode = [self.grid.encode().tolist(), self.agent_pos, self.agent_dir, self.key_pos, self.door_pos, carryingKey] #  self.splitIdx, self.doorIdx # [self.grid.encode().tolist(), self.agent_pos, self.agent_dir]
 
         for item in to_encode:
             sample_hash.update(str(item).encode('utf8'))
@@ -1227,12 +1230,6 @@ class MiniGridEnv(gym.Env):
         obs = {
             'image': image,
             'direction': self.agent_dir,
-            'agent_x': self.agent_pos[0],
-            'agent_y': self.agent_pos[1],
-            'key_x': self.key_pos[0],
-            'key_y': self.key_pos[1],
-            'door_x': self.door_pos[0],
-            'door_y': self.door_pos[1],
             'mission': self.mission
         }
 
