@@ -12,7 +12,7 @@ class DoorKeyEnv(MiniGridEnv):
             max_steps=10*size*size
         )
 
-    def _gen_grid(self, width, height):
+    def _gen_grid(self, width, height, stateInfo):
         # Create an empty grid
         self.grid = Grid(width, height)
 
@@ -35,7 +35,11 @@ class DoorKeyEnv(MiniGridEnv):
         doorIdx = self._rand_int(1, width-2) # Ex) 2
         self.doorIdx = doorIdx
         self.door_pos = (splitIdx, doorIdx)
-        self.put_obj(Door('yellow', is_locked=True), splitIdx, doorIdx)
+
+        if stateInfo is not None:
+            self.put_obj(Door('yellow', is_locked=stateInfo["is_locked"], is_open=stateInfo["is_open"]), splitIdx, doorIdx)
+        else:
+            self.put_obj(Door('yellow', is_locked=True), splitIdx, doorIdx)
 
         # Place a yellow key on the left side
         self.key_pos = self.place_obj(
@@ -46,7 +50,7 @@ class DoorKeyEnv(MiniGridEnv):
 
         self.mission = "use the key to open the door and then get to the goal"
 
-
+    """
     def _gen_state(self, width, height, stateInfo):
          # Create an empty grid
         self.grid = stateInfo["grid"]
@@ -83,7 +87,7 @@ class DoorKeyEnv(MiniGridEnv):
         self.step_count = stateInfo["step_count"]
 
         self.mission = "use the key to open the door and then get to the goal"
-
+    """
 
 class DoorKeyEnv5x5(DoorKeyEnv):
     def __init__(self):

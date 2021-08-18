@@ -713,10 +713,12 @@ class MiniGridEnv(gym.Env):
         # To keep the same grid for each episode, call env.seed() with
         # the same seed before calling env.reset()
 
+        """
         if stateInfo is not None:
             self._gen_state(self.width, self.height, stateInfo)
         else:
-            self._gen_grid(self.width, self.height)
+        """
+        self._gen_grid(self.width, self.height, stateInfo)
 
         # These fields should be defined by _gen_grid
         assert self.agent_pos is not None
