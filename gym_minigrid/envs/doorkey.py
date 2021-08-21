@@ -13,6 +13,7 @@ class DoorKeyEnv(MiniGridEnv):
         )
 
     def _gen_grid(self, width, height, stateInfo):
+        print("GEN GRID, DOORKEY ENV")
         # Create an empty grid
         self.grid = Grid(width, height)
 
