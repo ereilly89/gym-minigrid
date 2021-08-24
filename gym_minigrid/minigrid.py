@@ -721,7 +721,7 @@ class MiniGridEnv(gym.Env):
         print("self.width: " + str(self.width))
         print("self.height: " + str(self.height))
         print("stateInfo: " + str(stateInfo))
-        self._gen_grid(self.width, self.height) #self._gen_grid(self.width, self.height, stateInfo)
+        self._gen_grid(self.width, self.height, stateInfo)
 
         # These fields should be defined by _gen_grid
         assert self.agent_pos is not None

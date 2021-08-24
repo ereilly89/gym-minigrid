@@ -18,7 +18,7 @@ def reset():
     if args.seed != -1:
         env.seed(args.seed)
 
-    obs = env.reset()
+    obs = env.reset(None)
     #print("hash:"+str(env.hash()))
     if hasattr(env, 'mission'):
         print('Mission: %s' % env.mission)
