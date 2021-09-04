@@ -698,7 +698,7 @@ class MiniGridEnv(gym.Env):
         self.agent_dir = None
 
         # Initialize the RNG
-        self.seed(seed=seed)
+        self.theSeed = self.seed(seed=seed)
 
         # Initialize the state
         self.reset(None)
