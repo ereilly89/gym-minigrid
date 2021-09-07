@@ -21,6 +21,7 @@ class DoorKeyEnv(MiniGridEnv):
         self.grid.wall_rect(0, 0, width, height)
 
         # Place a goal in the bottom-right corner
+        self.goal_pos = (width - 1, height - 2)
         self.put_obj(Goal(), width - 2, height - 2)
 
         # Create a vertical splitting wall
