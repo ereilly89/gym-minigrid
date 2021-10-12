@@ -1154,6 +1154,7 @@ class MiniGridEnv(gym.Env):
         elif action == self.actions.pickup:
             if fwd_cell and fwd_cell.can_pickup():
                 if self.carrying is None:
+                    reward = self._reward() - 0.5 # this gives us a reward of 0.5 for picking up the key
                     self.carrying = fwd_cell
                     self.carrying.cur_pos = np.array([-1, -1])
                     self.grid.set(*fwd_pos, None)
@@ -1161,6 +1162,7 @@ class MiniGridEnv(gym.Env):
         # Drop an object
         elif action == self.actions.drop:
             if not fwd_cell and self.carrying:
+                reward = self._reward() - 1.5
                 self.grid.set(*fwd_pos, self.carrying)
                 self.carrying.cur_pos = fwd_pos
                 self.carrying = None
